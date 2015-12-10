@@ -9,6 +9,7 @@ public class Hexadecimal implements Comparable{
     private final static String HEXDIGITS = "0123456789ABCDEF"; //index of Hex char = value in base 10
     private int _decNum;
     private String _hexNum;
+    int x;
     
 
 
@@ -157,6 +158,9 @@ public class Hexadecimal implements Comparable{
 	if (!(other instanceof Hexadecimal)){
 	    throw new ClassCastException("The input isn't a Hexadecimal");
 	}
+	if(other == null){
+	    throw new NullPointerException("The input is null. Please give it a value");
+	}
 	if (this._decNum == otherVal){
 	    return 0;
 	}
@@ -244,7 +248,6 @@ public class Hexadecimal implements Comparable{
 	System.out.println( hexToDec("2E"));
 	System.out.println( hexToDec("111"));
 	System.out.println( hexToDec("2F"));
-	
 
     }//end main()
 

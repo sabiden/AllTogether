@@ -127,6 +127,12 @@ public class Rational implements Comparable{
     }
 
     public int compareTo(Object o) {
+	if (!(o instanceof Hexadecimal)){
+	    throw new ClassCastException("The input isn't a Hexadecimal");
+	}
+	if(o == null){
+	    throw new NullPointerException("The input is null. Please give it a value");
+	}
         this.reduce();
 	((Rational)o).reduce();
 	//Stimulates the idea of cross-multiplication so that the fractions have the same denominator, and then compares a and b which are the numerator values

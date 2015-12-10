@@ -182,6 +182,12 @@ public class Binary implements Comparable{
       negative integer if this<input, positive integer otherwise
       =============================================*/
     public int compareTo( Object other ) {
+	if (!(other instanceof Hexadecimal)){
+	    throw new ClassCastException("The input isn't a Hexadecimal");
+	}
+	if(other == null){
+	    throw new NullPointerException("The input is null. Please give it a value");
+	}
 	//First uses equals to compare, returns 0 if true
 	if (this.equals(other)){
 	    return 0;
