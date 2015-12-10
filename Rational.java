@@ -127,8 +127,19 @@ public class Rational implements Comparable{
     }
 
     public int compareTo(Object o) {
-	if (!(o instanceof Hexadecimal)){
-	    throw new ClassCastException("The input isn't a Hexadecimal");
+	if (!(o instanceof Comparable)){
+	    throw new ClassCastException("The input isn't Comparable");
+	}
+	if (!(o instanceof Rational)){
+	    if (o instanceof Binary){
+		//Creates new Ratonals, using the values of the Binary or Hexadecimal number
+		Comparable j = new Rational(((Binary)o).getNum(),1);
+		return compareTo(j);
+	    }
+	    if (o instanceof Hexadecimal){
+		Comparable j = new Rational(((Hexadecimal)o).getNum(),1);
+		return compareTo(j);
+	    }
 	}
 	if(o == null){
 	    throw new NullPointerException("The input is null. Please give it a value");

@@ -22,7 +22,7 @@ public class SuperArray{
  
     //~~~~~INSTANCE VARS~~~~~
     //underlying container, or "core" of this data structure:
-    private int[] _data;
+    private Comparable[] _data;
 
     //position of last meaningful value
     private int _lastPos;
@@ -34,7 +34,7 @@ public class SuperArray{
     //~~~~~METHODS~~~~~
     //default constructor  initializes 10-item array
     public SuperArray() { 
-    	_data = new int[10];
+    	_data = new Comparable[10];
     	_lastPos = -1; //flag to indicate no lastpos yet
     	_size = 0;	
     }
@@ -57,7 +57,7 @@ public class SuperArray{
 		
     //double capacity of this SuperArray
     private void expand() { 
-		int[] temp = new int[ _data.length * 2 ];
+		Comparable[] temp = new Comparable[ _data.length * 2 ];
 		for( int i = 0; i < _data.length; i++ )
 	    	temp[i] = _data[i];
 		_data = temp;
@@ -65,14 +65,14 @@ public class SuperArray{
 
 		
     //accessor -- return value at specified index
-    public int get( int index ) {
+    public Comparable get( int index ) {
     	return _data[index]; }
 
 		
     //mutator -- set value at index to newVal, 
     //           return old value at index
-    public int set( int index, int newVal ) {
-	int temp= _data[index];
+    public Comparable set( int index, Comparable newVal ) {
+	Comparable temp= _data[index];
 	_data[index]= newVal;
 	return temp;
     }
@@ -80,7 +80,7 @@ public class SuperArray{
 
     // ~~~~~~~~~~~~~~ PHASE II ~~~~~~~~~~~~~~
     //adds an item after the last item
-    public void add( int newVal ) {
+    public void add( Comparable newVal ) {
     	//if _data is full, expand the array
     	if (_size == _data.length){
 	    	expand();
@@ -95,7 +95,7 @@ public class SuperArray{
 
     //inserts an item at index
     //shifts existing elements to the right
-    public void add( int index, int newVal ) { 
+    public void add( int index, Comparable newVal ) { 
     	//checks if there is a meaningful value at index
     	if (index> _lastPos){
 	    System.out.println("No meaningful int at index");
@@ -132,10 +132,77 @@ public class SuperArray{
 
     //return number of meaningful items in _data
     public int size() { return _size;}
+    
+    //Iterates through the array and stops at the first index with the same value as the input, returning the index
+    public int linSearch(Comparable c){
+	for (int i = 0; i < _size;i++){
+	    if (c.compareTo(_data[i]) == 0){
+		return i;
+	    }
+	}
+	return -1;
+    }
+    
+    //Checks to make sure every value after a value at an index is greater than itself, returns true is everything is in order, false otehrwise
+    public boolean isSorted(){
+	for (int i = 0; i < (_size - 2); i++){
+	    if (_data[i].compareTo(_data[i + 1]) > 0){
+		return false;
+	    }
+	}
+	return true;
+    }
 
-     public static void main( String[] args ) {
-	//Test Cases 
-	
+    public static void main( String[] args ) {
+	//Test Cases
+	SuperArray Boss = new SuperArray();
+	System.out.println(Boss);
+	Comparable a = new Rational(5,10);
+	Boss.add(a);
+	System.out.println(Boss);
+	Comparable b = new Binary(37);
+	Comparable c = new Hexadecimal(5);
+	Comparable d = new Hexadecimal(6);
+	Comparable e = new Hexadecimal(9);
+	Comparable f = new Rational(12,2);
+	Comparable g = new Rational(24,4);
+	Comparable h = new Binary(6);
+	Boss.add(b);
+	Boss.add(c);
+	Boss.add(d);
+	Boss.add(e);
+	Boss.add(f);
+	Boss.add(g);
+	Boss.add(h);
+	System.out.println(Boss);
+	Comparable s1 = new Binary(6);
+	Comparable s2 = new Hexadecimal(6);
+	Comparable s3 = new Rational(6,1);
+	Comparable s4 = new Binary(7);
+	Comparable s5 = new Hexadecimal(7);
+	Comparable s6 = new Rational(7,1);
+	System.out.println(Boss.linSearch(s1));
+	System.out.println(Boss.linSearch(s2));
+	System.out.println(Boss.linSearch(s3));
+	System.out.println(Boss.linSearch(s4));
+	System.out.println(Boss.linSearch(s5));
+	System.out.println(Boss.linSearch(s6));
+	System.out.println(Boss.isSorted());
+	SuperArray Boss2 = new SuperArray();
+	Comparable a1 = new Binary(1);
+	Comparable a2 = new Hexadecimal(2);
+	Comparable a3 = new Rational(3,1);
+	Comparable a4 = new Binary(4);
+	Comparable a5 = new Hexadecimal(5);
+	Comparable a6 = new Rational(6,1);
+	Boss2.add(a1);
+	Boss2.add(a2);
+	Boss2.add(a3);
+	Boss2.add(a4);
+	Boss2.add(a5);
+	Boss2.add(a6);
+	System.out.println(Boss2.isSorted());
+
 	//In order to check and call from ListInt, the var type is ListInt instead of SuperArray, esuring that only ListInt's functions are called.
 
 	//This should and does return an error b/c the var type of test2 is Listint and should have this function

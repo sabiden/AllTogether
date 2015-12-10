@@ -156,10 +156,6 @@ public class Binary implements Comparable{
       Object), or if this and other represent equal binary values
       =============================================*/
     public boolean equals( Object other ) { 
-	//Returns false if other isn't a instance of  binary
-	if (!(other instanceof Binary)){
-	    return false;
-	}
 	//This returns true if they are the same alias
 	if (this == other){
 	    return true;
@@ -182,11 +178,29 @@ public class Binary implements Comparable{
       negative integer if this<input, positive integer otherwise
       =============================================*/
     public int compareTo( Object other ) {
-	if (!(other instanceof Hexadecimal)){
-	    throw new ClassCastException("The input isn't a Hexadecimal");
+	if (!(other instanceof Comparable)){
+	    throw new ClassCastException("The input isn't Comparable");
 	}
 	if(other == null){
 	    throw new NullPointerException("The input is null. Please give it a value");
+	}
+	if (!(other instanceof Binary)){
+	    //Executes these functions, which find better means to compare, when other is a Hexadecimal or Binary
+	    if (other instanceof Hexadecimal){
+		Comparable j = new Binary(((Hexadecimal)other).getNum());
+		return compareTo(j);
+	    }
+	    if (other instanceof Rational){
+		if (_decNum == ((Rational)other).floatValue()){
+		    return 0;
+		}
+		if (_decNum < ((Rational)other).floatValue()){
+		    return -1;
+		}
+		if (_decNum > ((Rational)other).floatValue()){
+		    return 1;
+		}
+	    }
 	}
 	//First uses equals to compare, returns 0 if true
 	if (this.equals(other)){
@@ -201,6 +215,10 @@ public class Binary implements Comparable{
 	}
 	//All else fails, return 99
 	return 99;
+    }
+    
+    public int getNum(){
+	return _decNum;
     }
 
 

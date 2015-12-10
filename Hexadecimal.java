@@ -155,11 +155,29 @@ public class Hexadecimal implements Comparable{
       =============================================*/
     public int compareTo( Object other ) {
 	int otherVal = hexToDec(other.toString());
-	if (!(other instanceof Hexadecimal)){
+	if (!(other instanceof Comparable)){
 	    throw new ClassCastException("The input isn't a Hexadecimal");
 	}
 	if(other == null){
 	    throw new NullPointerException("The input is null. Please give it a value");
+	}
+	//Modifications made for when other is a Hexadecimal or Rational
+	if (!(other instanceof Hexadecimal)){
+	    if (other instanceof Binary){
+		Comparable j = new Hexadecimal(((Binary)other).getNum());
+		return compareTo(j);
+	    }
+	    if (other instanceof Rational){
+		if (_decNum == ((Rational)other).floatValue()){
+		    return 0;
+		}
+		if (_decNum < ((Rational)other).floatValue()){
+		    return -1;
+		}
+		if (_decNum > ((Rational)other).floatValue()){
+		    return 1;
+		}
+	    }
 	}
 	if (this._decNum == otherVal){
 	    return 0;
@@ -170,6 +188,10 @@ public class Hexadecimal implements Comparable{
 	else {
 	    return -1;
 	}
+    }
+
+    public int getNum(){
+	return _decNum;
     }
 
 
